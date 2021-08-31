@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Chinese time at your location {% endblock %}</h1>
+
+<p> {{ chin }}  </p>
+
+ <p>   {{ tim }} </p>
+
+<div id="now"> </div>
+
+<script>
+ var now = new Date();
+ document.getElementById('now').innerHTML = "It is " + now + " at your location now.";
+
+</script>
+
+
+{% endblock %}

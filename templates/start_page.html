@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Chinese time {% endblock %}</h1>
+
+
+<div id="description">
+
+<p>Hi, here you can find out chinese time at your location. We get your coordinates, calculate an astronomic time and
+then show you chinese hour and its description. </p>
+
+<ol>
+    <li> Click the button to get your coordinates</li>
+    <li> Insert your coordinates into the form</li>
+    <li> Click submit</li>
+</ol>
+</div>
+
+<button class="btn btn-primary" onclick="getLocation()">Get your coordinates</button>
+
+<p id="coord"></p>
+<div id="map"></div>
+
+
+<div id="coordinates">
+<h2> Insert coordinates </h2>
+
+<form method="post">
+
+    <label for="lat">Latitude: </label><br>
+    <input  id="lat" name="lat" value="{{ request.form['lat'] }}" ><br>
+    <label for="long">Longitude: </label><br>
+    <input  id="long" name="long"  value="{{ request.form['long'] }}"><br><br>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+</div>
+
+
+<script>
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+
+  document.getElementById('coord').innerHTML = "Latitude: " + position.coords.latitude +
+  "<br>Longitude: " + position.coords.longitude;
+  var link = `https://www.openstreetmap.org/#map=18/${position.coords.latitude}/${position.coords.longitude}`;
+  document.getElementById('map').innerHTML = '<a href="'+link+'" target="_blank">You can check your location on the map</a>';
+  document.getElementById('lat').value = position.coords.latitude;
+  document.getElementById('long').value = position.coords.longitude;
+}
+
+
+</script>
+{% endblock %}
